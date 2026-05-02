@@ -1,4 +1,4 @@
-
+-- [[ WRK HUB | V1 ULTIMATE - REBUILT STABLE ]] --
 -- Credits: @wrxonthetop
 
 local Players = game:GetService("Players")
@@ -9,27 +9,16 @@ local UserInputService = game:GetService("UserInputService")
 local Lighting = game:GetService("Lighting")
 
 -- [[ EXPIRY CONFIGURATION ]] --
--- Subukan mong baguhin ang date sa nakalipas na araw (e.g., Day = 1) para ma-test mo na working ang block!
 local ExpiryYear = 2026
 local ExpiryMonth = 5
 local ExpiryDay = 15
 
 local function IsExpired()
     local CurrentTime = os.date("!*t") -- UTC Time
-    local Expired = false
-    
-    if CurrentTime.year > ExpiryYear then
-        Expired = true
-    elseif CurrentTime.year == ExpiryYear then
-        if CurrentTime.month > ExpiryMonth then
-            Expired = true
-        elseif CurrentTime.month == ExpiryMonth then
-            if CurrentTime.day > ExpiryDay then
-                Expired = true
-            end
-        end
-    end
-    return Expired
+    if CurrentTime.year > ExpiryYear then return true end
+    if CurrentTime.year == ExpiryYear and CurrentTime.month > ExpiryMonth then return true end
+    if CurrentTime.year == ExpiryYear and CurrentTime.month == ExpiryMonth and CurrentTime.day > ExpiryDay then return true end
+    return false
 end
 
 -- [[ LOAD UI LIBRARY ]] --
@@ -37,7 +26,7 @@ local success, Rayfield = pcall(function()
     return loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 end)
 
-if not success then return end
+if not success or not Rayfield then return end
 
 local Window = Rayfield:CreateWindow({
    Name = "WRK HUB | V1 ULTIMATE",
@@ -49,28 +38,27 @@ local Window = Rayfield:CreateWindow({
       Title = "WRK HUB | LOGIN",
       Subtitle = "Build-in Key Only",
       Note = "🔑 Key: WRX | Exp: May 15, 2026",
-      FileName = "WRK_Final_Solid_V3", -- Binago ko para 'di mag-auto login ang luma
-      SaveKey = false, -- I-false muna natin para ma-test mo ang expiry
+      FileName = "WRK_HUB_STABLE_V1", 
+      SaveKey = false, 
       GrabKeyFromSite = false,
       Actions = {
           [1] = {
               Text = "Login",
               OnPress = function(Key)
-                  -- DITO ANG MATINDING CHECKING
                   if IsExpired() then
-                      Rayfield:Notify({Title = "SCRIPT EXPIRED", Content = "Ang script na ito ay expired na! Contact: @wrxonthetop", Duration = 10})
-                      return false -- Haharangin ang pagpasok
+                      Rayfield:Notify({Title = "SCRIPT EXPIRED", Content = "Contact: @wrxonthetop", Duration = 10})
+                      return false 
                   end
                   
                   if Key == "WRX" then
-                      return true -- Papasok lang kung tama ang key AT hindi expired
+                      return true 
                   else
-                      return false -- Maling key
+                      return false 
                   end
               end
           }
       },
-      Key = {} -- INALIS NATIN DITO PARA HINDI MA-BYPASS ANG EXPIRY CHECK
+      Key = {} -- Empty para mapilitan dumaan sa OnPress check
    }
 })
 
@@ -189,4 +177,5 @@ RunService.RenderStepped:Connect(function()
     end
 end)
 
-Rayfield:Notify({Title = "WRK HUB READY", Content = "Success! No Bypass Allowed.", Duration = 5})
+Rayfield:Notify({Title = "WRK HUB READY", Content = "Script Loaded! Use Key: WRX", Duration = 5})
+
