@@ -12,7 +12,7 @@ local Lighting = game:GetService("Lighting")
 -- Subukan mong baguhin ang date sa nakalipas na araw (e.g., Day = 1) para ma-test mo na working ang block!
 local ExpiryYear = 2026
 local ExpiryMonth = 5
-local ExpiryDay = 10
+local ExpiryDay = 15
 
 local function IsExpired()
     local CurrentTime = os.date("!*t") -- UTC Time
@@ -48,7 +48,7 @@ local Window = Rayfield:CreateWindow({
    KeySettings = {
       Title = "WRK HUB | LOGIN",
       Subtitle = "Build-in Key Only",
-      Note = "🔑 Key: WRK_SOLIDS | Exp: May 10, 2026",
+      Note = "🔑 Key: WRX | Exp: May 15, 2026",
       FileName = "WRK_Final_Solid_V3", -- Binago ko para 'di mag-auto login ang luma
       SaveKey = false, -- I-false muna natin para ma-test mo ang expiry
       GrabKeyFromSite = false,
@@ -62,7 +62,7 @@ local Window = Rayfield:CreateWindow({
                       return false -- Haharangin ang pagpasok
                   end
                   
-                  if Key == "WRK_SOLIDS" then
+                  if Key == "WRX" then
                       return true -- Papasok lang kung tama ang key AT hindi expired
                   else
                       return false -- Maling key
